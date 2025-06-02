@@ -1,0 +1,28 @@
+import requests
+
+url = "https://api.us1.bfl.ai/v1/flux-pro-1.0-expand"
+
+payload = {
+    "image": "<string>",
+    "top": 1024,
+    "bottom": 1024,
+    "left": 1024,
+    "right": 1024,
+    "prompt": "ein fantastisches bild",
+    "steps": 50,
+    "prompt_upsampling": True,
+    "seed": 123,
+    "guidance": 50.75,
+    "output_format": "jpeg",
+    "safety_tolerance": 2,
+    "webhook_url": "<string>",
+    "webhook_secret": "<string>"
+}
+headers = {
+    "x-key": "<api-key>",
+    "Content-Type": "application/json"
+}
+
+response = requests.request("POST", url, json=payload, headers=headers)
+
+print(response.text)

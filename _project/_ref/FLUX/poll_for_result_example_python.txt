@@ -1,0 +1,29 @@
+# This assumes that the `request_id` variable is set.
+
+import time
+import os
+import requests
+
+# Ensure request_id is set from the previous step
+# request_id = "your_request_id_here" 
+
+while True:
+    time.sleep(1.5)
+    result = requests.get(
+        'https://api.us1.bfl.ai/v1/get_result',
+        headers={
+            'accept': 'application/json',
+            'x-key': os.environ.get("BFL_API_KEY"),
+        },
+        params={'id': request_id},
+    ).json()
+    
+    status = result.get("status")
+    print(f"Status: {status}")
+
+    if status == "Ready":
+        print(f"Result: {result.get('result', {}).get('sample')}")
+        break
+    elif status not in ["Processing", "Queued"]: 
+        print(f"An error or unexpected status occurred: {result}")
+        break

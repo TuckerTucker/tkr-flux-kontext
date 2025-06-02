@@ -1,0 +1,18 @@
+# Flux CLI Configuration
+defaults:
+  model: flux-kontext-pro
+  output_format: png
+  safety_tolerance: 2
+  aspect_ratio: "1:1"
+  prompt_upsampling: false
+  # seed: 4242      # Use a fixed seed for reproducible results
+  # seed: random    # Explicitly generate random seeds (default behavior)
+
+paths:
+  source_images: ./data/source_images
+  output_directory: ./data/generated
+
+webhook:
+  enabled: false
+  port: 8080
+  auto_start: false

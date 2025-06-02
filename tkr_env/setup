@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# Setup script for tkr_env
+# This script:
+# 1. Removes the .git directory from tkr_env
+# 2. Copies start_env to the parent project directory
+
+# Get the absolute path of the script
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+PARENT_DIR="$(dirname "$SCRIPT_DIR")"
+
+echo "Setting up tkr_env..."
+
+# Remove .git directory if it exists
+if [ -d "$SCRIPT_DIR/.git" ]; then
+    echo "Removing tkr_env/.git directory..."
+    rm -rf "$SCRIPT_DIR/.git"
+    echo "✓ .git directory removed"
+else
+    echo "✓ No .git directory found (already clean)"
+fi
+
+# Copy start_env.copyToParent to parent directory as start_env
+if [ -f "$SCRIPT_DIR/start_env.copyToParent" ]; then
+    echo "Copying start_env to parent directory..."
+    cp "$SCRIPT_DIR/start_env.copyToParent" "$PARENT_DIR/start_env"
+    chmod +x "$PARENT_DIR/start_env"
+    echo "✓ start_env copied to $PARENT_DIR"
+else
+    echo "✗ Error: start_env.copyToParent not found"
+    exit 1
+fi
+
+echo ""
+echo "Setup complete! You can now use:"
+echo "  source start_env"
+echo "from your project directory to create/activate the Python environment."

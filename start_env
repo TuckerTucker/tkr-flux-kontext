@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Default values
+env_name=""
+
+# Parse command line arguments
+while [[ $# -gt 0 ]]; do
+    key="$1"
+    case $key in
+        --env)
+            env_name="$2"
+            shift
+            shift
+            ;;
+        *)
+            echo "Unknown option: $1"
+            exit 1
+            ;;
+    esac
+done
+
+cd tkr_env
+
+# Pass the --env argument to tkr_env.sh if provided
+if [ -n "$env_name" ]; then
+    source tkr_env.sh --env "$env_name"
+else
+    source tkr_env.sh
+fi
+
+cd ..
